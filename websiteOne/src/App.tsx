@@ -1,7 +1,7 @@
 
 import './App.css'
 import './index.css'
-import Navbar from './navbar'
+import Navbar from './componants/navbar'
 function App() {
   
   return (
