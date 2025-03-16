@@ -22,16 +22,16 @@ export default function Navbar() {
         
         {/* Logo */}
         <Link to="/">
-            <div className="text-2xl font-bold text-black">MyBrand</div>
+            <div className="text-2xl font-bold font-poppins text-black">MyBrand</div>
         </Link>
        
 
         {/* Menu Items */}
         <div className="hidden md:flex space-x-6">
-          <Link to="/" onClick={() => setNavbarOption("home")} className={`text-black hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out  ${navbarOption === "home" ? "bg-black text-white" : ""}`}>Home</Link>
-          <Link to="/about" onClick={() => setNavbarOption("about")} className={`text-black hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "about" ? "bg-black text-white" : ""}`}>About</Link>
-          <Link to="/services" onClick={() => setNavbarOption("services")}className={`text-black hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "services" ? "bg-black text-white" : ""}`}>Services</Link>
-          <Link to="/contact" onClick={() => setNavbarOption("contact")}className={`text-black hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "contact" ? "bg-black text-white" : ""}`}>Contact</Link>
+          <Link to="/" onClick={() => setNavbarOption("home")} className={`text-black font-poppins hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out  ${navbarOption === "home" ? "bg-black text-white" : ""}`}>Home</Link>
+          <Link to="/about" onClick={() => setNavbarOption("about")} className={`text-black font-poppins hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "about" ? "bg-black text-white" : ""}`}>About</Link>
+          <Link to="/services" onClick={() => setNavbarOption("services")}className={`text-black font-poppins hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "services" ? "bg-black text-white" : ""}`}>Services</Link>
+          <Link to="/contact" onClick={() => setNavbarOption("contact")}className={`text-black font-poppins hover:text-gray-500  px-3 rounded-full py-1 transition-all duration-300 ease-in-out ${navbarOption === "contact" ? "bg-black text-white" : ""}`}>Contact</Link>
         </div>
 
       

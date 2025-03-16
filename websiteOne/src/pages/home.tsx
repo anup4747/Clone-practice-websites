@@ -3,7 +3,7 @@
 export default function Home() {
 
     return (
-   <div className="mt-80">Home</div>
+   <div className="mt-80 font-poppins">Home</div>
     );
   }
   
