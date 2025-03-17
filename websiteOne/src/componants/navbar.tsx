@@ -84,13 +84,13 @@ export default function Navbar() {
                 value={searchQuery}
                 placeholder="Search ..."
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-gray-100 dark:bg-gray-800 text-black dark:text-white rounded-full px-4 py-9 focus:outline-dashed  w-64"
+                className="bg-gray-600 dark:bg-gray-300 text-black dark:text-white rounded-full px-1 py-1 focus:outline-dashed  w-64"
               />
             </form>
 
             <button
               type="submit"
-              className="bg-gray-100 dark:bg-gray-800 ml text-black dark:text-black p-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors "
+              className="bg-gray-500 dark:bg-gray-00 text-black dark:text-white p-2 ml-6 rounded-md hover:bg-gray-800 dark:hover:bg-gray-400 transition-colors "
             >
               <Search className="w-5 h-5" />
             </button>

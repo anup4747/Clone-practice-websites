@@ -1,5 +1,5 @@
 import "./App.css";
-import "./output.css"
+import "./index.css"
 import Navbar from "./componants/navbar";
 import Home from "./pages/home";
 import Services from "./pages/services";
