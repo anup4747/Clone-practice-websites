@@ -90,7 +90,7 @@ export default function Navbar() {
 
             <button
               type="submit"
-              className="bg-gray-500 dark:bg-gray-00 text-black dark:text-white p-2 ml-6 rounded-md hover:bg-gray-800 dark:hover:bg-gray-400 transition-colors "
+              className="bg-gray-500 dark:bg-gray-00 text-black dark:text-white p-2 ml-4 rounded-md hover:bg-gray-800 dark:hover:bg-gray-400 transition-colors "
             >
               <Search className="w-5 h-5" />
             </button>
