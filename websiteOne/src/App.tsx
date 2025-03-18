@@ -1,10 +1,11 @@
 import "./App.css";
-import "./index.css"
+import "./index.css";
 import Navbar from "./componants/navbar";
 import Home from "./pages/home";
 import Services from "./pages/services";
 import About from "./pages/about";
 import Contact from "./pages/contact";
+import Footer from "./componants/footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </Router>
     </>
   );
