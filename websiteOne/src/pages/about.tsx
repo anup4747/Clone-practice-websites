@@ -91,7 +91,7 @@ export default function About() {
 
       <div className="mt-24 mb-24">
         <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-16">Our Impact</h2>
+          <h2 className="text-4xl font-bold text-center mb-16">Our Impact</h2>
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center">
               <p className="text-5xl font-bold text-yellow-500">200+</p>
@@ -109,7 +109,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="bg-yellow-50 py-16">
+      <div className="bg-yellow-50 py-16 mb-10">
         <div className="max-w-5xl mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Join Our Team</h2>
           <p className="text-xl mb-8">We're always looking for talented individuals to help us reshape the future of retail personalization.</p>
