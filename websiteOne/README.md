@@ -10,8 +10,8 @@ This website showcases the Composition Engine service, which provides automated 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/composition-engine-website.git
-   cd composition-engine-website
+   git clone https://github.com/anup4747/Ecommerce-websites.git
+   cd Ecommerce-websites/website-folder
    ```
 
 2. **Install dependencies**
