@@ -87,7 +87,7 @@ export default function Home() {
           
           <div className="mt-20 bg-yellow-50 p-10 rounded-xl">
             <p className="text-xl italic">"The Composition Engine has completely transformed our email marketing strategy. We're seeing 40% higher open rates and our conversions have doubled."</p>
-            <div className="mt-6 flex items-center">
+            <div className="mt-6 flex justify-center">
               <div className="w-12 h-12 bg-gray-300 rounded-full"></div>
               <div className="ml-4">
                 <p className="font-bold">Sarah Johnson</p>
