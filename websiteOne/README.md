@@ -2,6 +2,31 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Overview
+
+This website showcases the Composition Engine service, which provides automated personalization for enterprise retailers' email marketing campaigns. The site includes a home page, services page, and other information about the platform's features and benefits (Only Ui).
+
+## Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/composition-engine-website.git
+   cd composition-engine-website
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser**
+   Visit [http://localhost:3000](http://localhost:3000) to view the website
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
