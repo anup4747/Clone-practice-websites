@@ -181,7 +181,7 @@ export default function Services() {
       </div>
 
       {/* Pricing CTA */}
-      <div className="mt-32 mb-32">
+      <div className="mt-32 mb-10">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">
             Ready to transform your email marketing?

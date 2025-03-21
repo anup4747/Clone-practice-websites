@@ -24,7 +24,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="features" className="mt-28 bg-gray-50 py-20">
+      <div id="features" className="mt-24 bg-gray-50 py-20">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-16">
             Why choose our Composition Engine?
@@ -72,7 +72,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="mt-32 mb-32">
+      <div className="mt-24 mb-10">
         <div className="max-w-5xl mx-auto px-4">
           <h2 className="text-4xl font-bold text-center mb-6">Trusted by leading retailers</h2>
           <p className="text-xl text-center text-gray-500 mb-16">Join hundreds of retailers who've transformed their email marketing</p>
