@@ -50,6 +50,12 @@ Ecommerce-websites/
 └── .....    
 ```
 
+## Quick Setup
+
+```
+npm create vite@latest my-react_app -- --template react-ts 
+```
+
 ## 🔗 Live Demo
 
 [Add your deployed website link here]
