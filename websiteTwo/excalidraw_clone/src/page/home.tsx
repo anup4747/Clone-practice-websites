@@ -4,7 +4,7 @@ import { ToolsMenu } from "../componants/toolsMenu";
 
 export const Home: React.FC = () => {
     return(
-        <section>
+        <section  >
             <ToolsMenu/>
         </section>
     )
