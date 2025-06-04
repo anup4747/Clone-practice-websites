@@ -1,0 +1,3 @@
+make a upper menu
+add states according to number buttons
+import icons from react-icons

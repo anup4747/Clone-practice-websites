@@ -1,12 +1,11 @@
 import './App.css'
 import "./index.css"
-function App() {
+import { Home } from './page/home'
+export const App: React.FC = () => {
 
   return (
     <>
-    <h1 className="text-3xl font-bold underline">
-      Excalidraw clone
-  </h1>
+    <Home/>
     </>
   )
 }
