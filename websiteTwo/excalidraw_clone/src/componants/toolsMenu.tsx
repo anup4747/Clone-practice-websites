@@ -118,7 +118,7 @@ export const ToolsMenu: React.FC = () => {
   );
 
   return (
-    <section className="absolute top-10 p-2 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-xl">
+    <section className="absolute top-5 p-2 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-xl">
       <div className="flex flex-row relative justify-center items-center space-x-3">
         <ToolButton
           tool={Tool.None}

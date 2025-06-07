@@ -1,13 +1,12 @@
-import './App.css'
-import "./index.css"
-import { Home } from './page/home'
+import "./App.css";
+import "./index.css";
+import { Home } from "./page/home";
 export const App: React.FC = () => {
-
   return (
-    <section >
-    <Home/>
+    <section>
+      <Home />
     </section>
-  )
-}
+  );
+};
 
-export default App
+export default App;
