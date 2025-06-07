@@ -20,24 +20,55 @@ import { FaPaintBrush } from "react-icons/fa";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { GiPaintBucket } from "react-icons/gi";
 
+enum Tool {
+  None = "none",
+  Hand = "hand",
+  Selection = "selection",
+  Square = "square",
+  Diamond = "diamond",
+  Circle = "circle",
+  Arrow = "arrow",
+  Line = "line",
+  Pencil = "pencil",
+  Text = "text",
+  Image = "image",
+  Eraser = "eraser",
+  PaintBrush = "paintBrush",
+  Star = "star",
+  PaintBucket = "paintBucket",
+}
+
+interface ToolConfig {
+  name: Tool;
+  icon: React.ReactNode;
+  key?: string;
+  isSubmenu?: boolean;
+}
+
+const tools: ToolConfig[] = [
+  { name: Tool.Hand, icon: <HiOutlineHand />, key: "h" },
+  { name: Tool.Selection, icon: <BiNavigation />, key: "1" },
+  { name: Tool.Square, icon: <BiSquareRounded />, key: "2" },
+  { name: Tool.Diamond, icon: <BsDiamond />, key: "3" },
+  { name: Tool.Circle, icon: <BiCircle />, key: "4" },
+  { name: Tool.Arrow, icon: <FiArrowRight />, key: "5" },
+  { name: Tool.Line, icon: <IoMdRemove />, key: "6" },
+  { name: Tool.Pencil, icon: <SlPencil />, key: "7" },
+  { name: Tool.Text, icon: <BiText />, key: "8" },
+  { name: Tool.Image, icon: <BiPhotoAlbum />, key: "9" },
+  { name: Tool.Eraser, icon: <BiEraser />, key: "0" },
+];
+
+const extraTools: ToolConfig[] = [
+  { name: Tool.PaintBrush, icon: <FaPaintBrush />, isSubmenu:true},
+  { name: Tool.Star, icon: <MdOutlineStarBorder />,isSubmenu:true },
+  { name: Tool.PaintBucket, icon: <GiPaintBucket />, isSubmenu:true },
+];
+
 export const ToolsMenu: React.FC = () => {
-  const [locked, setLocked] = useState(false);
-  const [hand, setHand] = useState(false);
-  const [selection, setSelection] = useState(false);
-  const [square, setSquare] = useState(false);
-  const [diamond, setDiamond] = useState(false);
-  const [circle, setCircle] = useState(false);
-  const [arrow, setArrow] = useState(false);
-  const [line, setLine] = useState(false);
-  const [pencil, setPencil] = useState(false);
-  const [text, setText] = useState(false);
-  const [image, setImage] = useState(false);
-  const [eraser, setEraser] = useState(false);
-  const [menu, setMenu] = useState(false);
-  const [star, setStar] = useState(false);
-  const [paintBucket, setPaintBucket] = useState(false);
-  const [paintBrush, setPaintBrush] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [locked, setLocked] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [activeTool, setActiveTool] = useState<Tool>(Tool.None);
 
   const handleLockToggle = () => {
     setLocked(!locked);
@@ -47,61 +78,20 @@ export const ToolsMenu: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const resetAllExcept = (activeSetter: (value: boolean) => void) => {
-    setLocked(false);
-    setHand(false);
-    setSelection(false);
-    setSquare(false);
-    setDiamond(false);
-    setCircle(false);
-    setArrow(false);
-    setLine(false);
-    setPencil(false);
-    setText(false);
-    setImage(false);
-    setEraser(false);
-    setMenu(false);
-    activeSetter(true);
-    setIsMenuOpen(false);
+  const selectTool = (tool: Tool) => {
+    console.log(`Selecting tool: ${tool}`);
+    setActiveTool(tool);
+    if (tool !== Tool.None) {
+      setIsMenuOpen(false);
+    }
   };
 
-  // Keyboard event handler for number keys 1-9, 0
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
-      if (locked) return; // Ignore keypress if locked
-      switch (event.key) {
-        case "1":
-          resetAllExcept(setSelection);
-          break;
-        case "2":
-          resetAllExcept(setSquare);
-          break;
-        case "3":
-          resetAllExcept(setDiamond);
-          break;
-        case "4":
-          resetAllExcept(setCircle);
-          break;
-        case "5":
-          resetAllExcept(setArrow);
-          break;
-        case "6":
-          resetAllExcept(setLine);
-          break;
-        case "7":
-          resetAllExcept(setPencil);
-          break;
-        case "8":
-          resetAllExcept(setText);
-          break;
-        case "9":
-          resetAllExcept(setImage);
-          break;
-        case "0":
-          resetAllExcept(setEraser);
-          break;
-        default:
-          break;
+      if (locked) return;
+      const tool = tools.find((t) => t.key === event.key);
+      if (tool) {
+        selectTool(tool.name);
       }
     };
 
@@ -111,156 +101,66 @@ export const ToolsMenu: React.FC = () => {
     };
   }, [locked]);
 
+  const ToolButton: React.FC<{
+    tool: Tool;
+    icon: React.ReactNode;
+    isActive: boolean;
+    onClick: () => void;
+  }> = ({ tool, icon, isActive, onClick }) => (
+    <div
+      onClick={onClick}
+      className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
+        isActive ? "bg-blue-900 hover:bg-blue-900" : ""
+      }`}
+    >
+      {icon}
+    </div>
+  );
+
   return (
-    <section className="p-2 bg-gray-800 rounded-xl">
-      <div className="flex flex-row  justify-center items-center space-x-1">
-        <div
+    <section className="absolute top-10 p-2 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-xl">
+      <div className="flex flex-row relative justify-center items-center space-x-3">
+        <ToolButton
+          tool={Tool.None}
+          icon={locked ? <BiLock /> : <BiLockOpen />}
+          isActive={locked}
           onClick={handleLockToggle}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            locked ? "bg-blue-900 hover:bg-blue-900" : ""
-          } `}
-        >
-          {locked ? <BiLock /> : <BiLockOpen />}
-        </div>
-        <div
-          onClick={() => resetAllExcept(setHand)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            hand ? "bg-blue-900 hover:bg-blue-900" : ""
-          } `}
-        >
-          {" "}
-          <HiOutlineHand />
-        </div>
-        <div
-          onClick={() => resetAllExcept(setSelection)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            selection ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          <BiNavigation />
-        </div>
+        />
 
-        <div
-          onClick={() => resetAllExcept(setSquare)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            square ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          <BiSquareRounded />
-        </div>
-        <div
-          onClick={() => resetAllExcept(setDiamond)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            diamond ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          <BsDiamond />
-        </div>
+        {tools
+          .filter((tool) => !tool.isSubmenu)
+          .map((tool) => (
+            <ToolButton
+              key={tool.name}
+              tool={tool.name}
+              icon={tool.icon}
+              isActive={activeTool === tool.name}
+              onClick={() => selectTool(tool.name)}
+            />
+          ))}
 
-        <div
-          onClick={() => resetAllExcept(setCircle)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            circle ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <BiCircle />
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setArrow)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            arrow ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <FiArrowRight />
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setLine)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            line ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <IoMdRemove />
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setPencil)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            pencil ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <SlPencil />
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setText)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            text ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          <BiText />{" "}
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setImage)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            image ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <BiPhotoAlbum />
-        </div>
-
-        <div
-          onClick={() => resetAllExcept(setEraser)}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            eraser ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          {" "}
-          <BiEraser />
-        </div>
-
-        <div
+        <ToolButton
+          key={Tool.None}
+          tool={Tool.None}
+          icon={<BiSolidGrid />}
+          isActive={isMenuOpen}
           onClick={handleToolsMenu}
-          className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-            isMenuOpen ? "bg-blue-900 hover:bg-blue-900" : ""
-          }`}
-        >
-          <BiSolidGrid />
-        </div>
+        />
       </div>
+
       {isMenuOpen && (
-        <div className="absolute top-12 right-2 bg-gray-800 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-10">
-          <div
-            onClick={() => resetAllExcept(setPaintBrush)}
-            className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-              paintBrush ? "bg-blue-500" : ""
-            }`}
-          >
-            <FaPaintBrush />
-          </div>
-          <div
-            onClick={() => resetAllExcept(setStar)}
-            className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-              star ? "bg-blue-500" : ""
-            }`}
-          >
-            <MdOutlineStarBorder />
-          </div>
-          <div
-            onClick={() => resetAllExcept(setPaintBucket)}
-            className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-              paintBucket ? "bg-blue-500" : ""
-            }`}
-          >
-            <GiPaintBucket />
-          </div>
+        <div className="absolute top-full right-1  mt-2 bg-gray-800 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-20">
+          {extraTools
+            .filter((extraTool) => extraTool.isSubmenu)
+            .map((extraTool) => (
+              <ToolButton
+                key={extraTool.name}
+                tool={extraTool.name}
+                icon={extraTool.icon}
+                isActive={activeTool === extraTool.name}
+                onClick={() => selectTool(extraTool.name)}
+              />
+            ))}
         </div>
       )}
     </section>
