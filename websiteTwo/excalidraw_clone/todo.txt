@@ -1,3 +1,4 @@
-make a upper menu
-add states according to number buttons
-import icons from react-icons
+now make footer
+learn more about states like if we press ctrl + the size of website not should be zoomed like charts should be zoomed
+learn about making shapes in website 
+make more componants like it is in menubar and learn from it  

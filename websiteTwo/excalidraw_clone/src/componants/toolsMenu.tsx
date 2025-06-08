@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SlPencil } from "react-icons/sl";
 import { FiArrowRight } from "react-icons/fi";
 import { IoMdRemove } from "react-icons/io";
@@ -19,6 +19,8 @@ import { BsDiamond } from "react-icons/bs";
 import { FaPaintBrush } from "react-icons/fa";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { GiPaintBucket } from "react-icons/gi";
+import { motion } from "framer-motion";
+import { Turtle } from "lucide-react";
 
 enum Tool {
   None = "none",
@@ -60,15 +62,16 @@ const tools: ToolConfig[] = [
 ];
 
 const extraTools: ToolConfig[] = [
-  { name: Tool.PaintBrush, icon: <FaPaintBrush />, isSubmenu:true},
-  { name: Tool.Star, icon: <MdOutlineStarBorder />,isSubmenu:true },
-  { name: Tool.PaintBucket, icon: <GiPaintBucket />, isSubmenu:true },
+  { name: Tool.PaintBrush, icon: <FaPaintBrush />, isSubmenu: true },
+  { name: Tool.Star, icon: <MdOutlineStarBorder />, isSubmenu: true },
+  { name: Tool.PaintBucket, icon: <GiPaintBucket />, isSubmenu: true },
 ];
 
 export const ToolsMenu: React.FC = () => {
   const [locked, setLocked] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [activeTool, setActiveTool] = useState<Tool>(Tool.None);
+  const extraToolsRef = useRef<HTMLDivElement>(null);
 
   const handleLockToggle = () => {
     setLocked(!locked);
@@ -85,6 +88,25 @@ export const ToolsMenu: React.FC = () => {
       setIsMenuOpen(false);
     }
   };
+
+  useEffect(() => {
+    const handleClickOutsideMenu = (event: MouseEvent) => {
+      if (
+        extraToolsRef.current &&
+        !extraToolsRef.current.contains(event.target as Node)
+      ) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutsideMenu);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideMenu);
+    };
+  }, [isMenuOpen]);
 
   useEffect(() => {
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -109,8 +131,10 @@ export const ToolsMenu: React.FC = () => {
   }> = ({ tool, icon, isActive, onClick }) => (
     <div
       onClick={onClick}
-      className={`cursor-pointer text-white text-2xl p-1 hover:bg-gray-700 rounded-sm ${
-        isActive ? "bg-blue-900 hover:bg-blue-900" : ""
+      className={`cursor-pointer text-white text-2xl p-2 hover:bg-gray-700  rounded-sm ${
+        isActive
+          ? "bg-blue-900 hover:bg-blue-900 shadow-[0_0_8px_2px_rgba(59,130,246,0.5)]"
+          : ""
       }`}
     >
       {icon}
@@ -118,8 +142,13 @@ export const ToolsMenu: React.FC = () => {
   );
 
   return (
-    <section className="absolute top-5 p-2 left-1/2 transform -translate-x-1/2 bg-gray-800 rounded-xl">
-      <div className="flex flex-row relative justify-center items-center space-x-3">
+    <motion.section
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="absolute top-5 p-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg"
+    >
+      <div className="flex flex-row relative justify-center items-center space-x-2">
         <ToolButton
           tool={Tool.None}
           icon={locked ? <BiLock /> : <BiLockOpen />}
@@ -149,7 +178,10 @@ export const ToolsMenu: React.FC = () => {
       </div>
 
       {isMenuOpen && (
-        <div className="absolute top-full right-1  mt-2 bg-gray-800 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-20">
+         <motion.section
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }} ref={extraToolsRef} className="absolute top-full right-1 mt-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-20">
           {extraTools
             .filter((extraTool) => extraTool.isSubmenu)
             .map((extraTool) => (
@@ -161,8 +193,8 @@ export const ToolsMenu: React.FC = () => {
                 onClick={() => selectTool(extraTool.name)}
               />
             ))}
-        </div>
+        </motion.section>
       )}
-    </section>
+    </motion.section>
   );
 };
