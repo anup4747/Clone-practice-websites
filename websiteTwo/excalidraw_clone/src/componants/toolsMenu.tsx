@@ -20,7 +20,6 @@ import { FaPaintBrush } from "react-icons/fa";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { GiPaintBucket } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { Turtle } from "lucide-react";
 
 enum Tool {
   None = "none",
@@ -178,10 +177,13 @@ export const ToolsMenu: React.FC = () => {
       </div>
 
       {isMenuOpen && (
-         <motion.section
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }} ref={extraToolsRef} className="absolute top-full right-1 mt-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-20">
+        <motion.section
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          ref={extraToolsRef}
+          className="absolute top-full right-1 mt-2 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl p-2 flex flex-col gap-2 shadow-lg z-20"
+        >
           {extraTools
             .filter((extraTool) => extraTool.isSubmenu)
             .map((extraTool) => (
