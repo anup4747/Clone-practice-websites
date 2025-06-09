@@ -2,3 +2,7 @@ now make footer
 learn more about states like if we press ctrl + the size of website not should be zoomed like charts should be zoomed
 learn about making shapes in website 
 make more componants like it is in menubar and learn from it  
+
+Debug the some bugs on line 
+make remaining tools 
+adjust the canvas size as excalidraw

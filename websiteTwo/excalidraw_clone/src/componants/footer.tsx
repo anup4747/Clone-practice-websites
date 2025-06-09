@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   AiOutlineGithub,
   AiOutlineX,
@@ -17,10 +17,8 @@ import {
 import { motion } from "framer-motion";
 
 export const Footer: React.FC = () => {
-
-  const [findMe,setFindMe] = useState<boolean>(false);
+  const [findMe, setFindMe] = useState<boolean>(false);
   const findMeRef = useRef<HTMLDivElement>(null);
-
 
   const handleFindMe = () => {
     setFindMe(!findMe);
@@ -28,17 +26,20 @@ export const Footer: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (findMeRef.current && !findMeRef.current.contains(event.target as Node)) {
+      if (
+        findMeRef.current &&
+        !findMeRef.current.contains(event.target as Node)
+      ) {
         setFindMe(false);
       }
     };
 
     if (findMe) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [findMe]);
   return (
@@ -74,49 +75,51 @@ export const Footer: React.FC = () => {
             <span>Library</span>
           </button>
           <div className="relative group" ref={findMeRef}>
-            <button  onClick={handleFindMe} className="flex items-center space-x-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500 transition">
+            <button
+              onClick={handleFindMe}
+              className="flex items-center space-x-2 px-4 py-2 rounded bg-purple-600 hover:bg-purple-500 transition"
+            >
               <AiOutlineMail className="text-white" />
               <span>Find Me</span>
             </button>
-            {findMe && 
-             <div className="absolute bottom-12 right-0 flex flex-col space-y-2 bg-gray-800 p-2 rounded shadow-lg">
-              <a
-                href="https://x.com/anup23257"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
-              >
-                <AiOutlineX />
-                <span>Twitter</span>
-              </a>
-              <a
-                href="mailto:anupdcodes@gmail.com"
-                className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
-              >
-                <AiOutlineMail />
-                <span>Email</span>
-              </a>
-              <a
-                href="https://discord.com/users/858686500757045270"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
-              >
-                <AiOutlineDiscord />
-                <span>Discord</span>
-              </a>
-              <a
-                href="https://github.com/anup4747"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
-              >
-                <AiOutlineGithub />
-                <span>GitHub</span>
-              </a>
-            </div>
-            }
-           
+            {findMe && (
+              <div className="absolute bottom-12 right-0 flex flex-col space-y-2 bg-gray-800 p-2 rounded shadow-lg">
+                <a
+                  href="https://x.com/anup23257"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
+                >
+                  <AiOutlineX />
+                  <span>Twitter</span>
+                </a>
+                <a
+                  href="mailto:anupdcodes@gmail.com"
+                  className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
+                >
+                  <AiOutlineMail />
+                  <span>Email</span>
+                </a>
+                <a
+                  href="https://discord.com/users/858686500757045270"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
+                >
+                  <AiOutlineDiscord />
+                  <span>Discord</span>
+                </a>
+                <a
+                  href="https://github.com/anup4747"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white hover:text-blue-400 transition"
+                >
+                  <AiOutlineGithub />
+                  <span>GitHub</span>
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </motion.section>

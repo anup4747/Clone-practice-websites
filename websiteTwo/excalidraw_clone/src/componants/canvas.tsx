@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { useTool } from './toolContext';
+import React, { useRef, useEffect, useState } from "react";
+import { useTool } from "./toolContext";
 
 enum Tool {
   None = "none",
@@ -35,25 +35,28 @@ const Canvas: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
     const resizeCanvas = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
       ctx.lineWidth = 2;
-      ctx.strokeStyle = '#FFFFFF';
-      ctx.lineCap = 'round';
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineCap = "round";
     };
 
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener("resize", resizeCanvas);
 
-    return () => window.removeEventListener('resize', resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
 
   // Get mouse position relative to canvas
-  const getMousePos = (canvas: HTMLCanvasElement, event: React.MouseEvent): Point => {
+  const getMousePos = (
+    canvas: HTMLCanvasElement,
+    event: React.MouseEvent
+  ): Point => {
     const rect = canvas.getBoundingClientRect();
     return {
       x: event.clientX - rect.left,
@@ -77,7 +80,7 @@ const Canvas: React.FC = () => {
     if (activeTool !== Tool.Line || !isDrawing || !startPoint) return;
 
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
     // Clear canvas for preview (for simplicity; store lines for persistence)
@@ -98,7 +101,7 @@ const Canvas: React.FC = () => {
     setIsDrawing(false);
 
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
+    const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx || !startPoint) return;
 
     const endPoint = getMousePos(canvas, e);
@@ -114,11 +117,11 @@ const Canvas: React.FC = () => {
   };
 
   return (
-    <div className="absolute  flex justify-center items-center bg-gray-100 z-10">
+    <div className="absolute flex justify-center items-center bg-gray-100 z-10">
       <canvas
         ref={canvasRef}
         className="border border-gray-300 shadow-lg bg-gray-900"
-        style={{ width: '800px', height: '600px' }}
+        style={{ width: "800px", height: "600px" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
