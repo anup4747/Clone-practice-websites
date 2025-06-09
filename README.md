@@ -24,7 +24,7 @@ A modern e-commerce website built to showcase my frontend development skills usi
 
 ```bash
 # Clone the repository
-git clone https://github.com/anup4747/Ecommerce-websites.git
+git clone https://github.com/anup4747/Clone-practice-websites
 
 # Navigate to the project
 cd Ecommures
@@ -41,7 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser to see the a
 ## 🧪 Project Structure
 
 ```
-Ecommerce-websites/
+Clone-practice-websites/
 ├── websiteOne
 ├── websiteTwo         
 ├── .....       
