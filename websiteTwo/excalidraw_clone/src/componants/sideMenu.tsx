@@ -81,7 +81,7 @@ export const SideMenu: React.FC = () => {
            transition={{ duration: 0.5 }} className="absolute top-5 p-2 left-5 bg-gradient-to-r from-gray-800 to-gray-700 shadow-lg z-20 rounded-xl">
         <div
           onClick={handleMenu}
-          className="cursor-pointer text-white text-2xl p-2 hover:bg-gray-700 rounded-sm"
+          className="cursor-pointer text-white text-2xl p-2 hover:bg-gray-700 rounded-sm z-20"
         >
           <AiOutlineMenu />
         </div>

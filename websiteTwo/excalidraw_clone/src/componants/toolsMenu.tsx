@@ -20,6 +20,7 @@ import { FaPaintBrush } from "react-icons/fa";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { GiPaintBucket } from "react-icons/gi";
 import { motion } from "framer-motion";
+import { useTool } from "./toolContext";
 
 enum Tool {
   None = "none",
@@ -71,7 +72,7 @@ export const ToolsMenu: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [activeTool, setActiveTool] = useState<Tool>(Tool.None);
   const extraToolsRef = useRef<HTMLDivElement>(null);
-
+  const { activeTool: activeToolContext, setActiveTool: setActiveToolContext } = useTool();
   const handleLockToggle = () => {
     setLocked(!locked);
   };
@@ -83,6 +84,7 @@ export const ToolsMenu: React.FC = () => {
   const selectTool = (tool: Tool) => {
     console.log(`Selecting tool: ${tool}`);
     setActiveTool(tool);
+    setActiveToolContext(tool); 
     if (tool !== Tool.None) {
       setIsMenuOpen(false);
     }
@@ -145,7 +147,7 @@ export const ToolsMenu: React.FC = () => {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="absolute top-5 p-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg"
+      className="absolute top-5 p-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-gray-800 to-gray-600 rounded-xl shadow-lg z-20"
     >
       <div className="flex flex-row relative justify-center items-center space-x-2">
         <ToolButton

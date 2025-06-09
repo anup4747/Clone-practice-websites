@@ -47,7 +47,7 @@ export const Footer: React.FC = () => {
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="fixed bottom-0 left-0 w-full bg-gray-900 text-white flex items-center justify-between p-4"
+        className="fixed bottom-0 left-0 w-full  text-white flex items-center justify-between p-4 z-20"
       >
         <div className="flex items-center space-x-4">
           <button className="p-2 rounded-full bg-gray-700 hover:bg-gray-600 transition">
