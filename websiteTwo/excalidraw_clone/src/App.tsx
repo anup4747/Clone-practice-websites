@@ -1,6 +1,6 @@
 import "./App.css";
 import "./index.css";
-import { Home } from "./page/home";
+import { Home } from "./pages/home";
 export const App: React.FC = () => {
   return (
     <section>
