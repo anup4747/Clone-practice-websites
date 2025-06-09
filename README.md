@@ -1,4 +1,4 @@
-# Ecommerce-websites
+# Clone-websites
 
 A modern e-commerce website built to showcase my frontend development skills using cutting-edge technologies.
 
