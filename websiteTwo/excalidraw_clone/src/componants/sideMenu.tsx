@@ -27,7 +27,7 @@ interface sideItem {
 // Sample navigation items
 const sideMenuItems: sideItem[] = [
   { label: "Open", href: "/", icon: <AiTwotoneFolder /> },
-  { label: "Save too..", href: "/about", icon: <AiOutlineDownload /> },
+  { label: "Save to..", href: "/about", icon: <AiOutlineDownload /> },
   { label: "Export Image", href: "/services", icon: <AiOutlineExport /> },
   {
     label: "Live Collabration",
