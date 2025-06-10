@@ -117,11 +117,11 @@ const Canvas: React.FC = () => {
   };
 
   return (
-    <div className="absolute flex justify-center items-center bg-gray-100 z-10">
+    <div className="absolute inset-0 justify-center items-center bg-gray-900 z-10">
       <canvas
         ref={canvasRef}
-        className="border border-gray-300 shadow-lg bg-gray-900"
-        style={{ width: "800px", height: "600px" }}
+        className="border shadow-lg bg-gray-900"
+        style={{ width: "100%", height: "100%" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
