@@ -104,23 +104,23 @@ export const SideMenu: React.FC = () => {
       label: "Live Collabration",
 
       icon: <AiOutlineUsergroupAdd />,
-      onClick: () => setIsModalOpen(true),
+      onClick: () => setIsLiveCollabOpen(true),
     },
     {
       label: "Command Palette",
 
       icon: <AiOutlineThunderbolt />,
-      onClick: () => setIsModalOpen(true),
+      onClick: () => setIsCommandPaletteOpen(true),
     },
     {
       label: "Find on canvas",
       icon: <AiOutlineSearch />,
-      onClick: () => setIsModalOpen(true),
+      onClick: () => setFindOnCanvasOpen(true),
     },
     {
       label: "Help",
       icon: <AiOutlineQuestionCircle />,
-      onClick: () => setIsModalOpen(true),
+      onClick: () => setIsHelpOpen(true),
     },
     {
       label: "Reset the canvas",

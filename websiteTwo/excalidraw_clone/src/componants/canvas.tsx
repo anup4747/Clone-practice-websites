@@ -24,11 +24,17 @@ interface Point {
   y: number;
 }
 
+interface Line {
+  start: Point;
+  end: Point;
+}
+
 const Canvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { activeTool } = useTool();
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<Point | null>(null);
+  const [lines, setLines] = useState<Line[]>([]);
 
   // Initialize canvas context and handle resizing
   useEffect(() => {
@@ -107,15 +113,52 @@ const Canvas: React.FC = () => {
     const endPoint = getMousePos(canvas, e);
 
     // Finalize the line
-    ctx.beginPath();
-    ctx.moveTo(startPoint.x, startPoint.y);
-    ctx.lineTo(endPoint.x, endPoint.y);
-    ctx.stroke();
+    const newLine = { start: startPoint, end: endPoint };
+    setLines((prevLines) => [...prevLines, newLine]);
+    setStartPoint(null); // Clear start point
 
-    // Optionally, store the line for persistence
-    // setLines([...lines, { start: startPoint, end: endPoint }]);
   };
 
+  const drawAllLines = (ctx: CanvasRenderingContext2D, previewLine?: Line) => {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+  // Draw stored lines
+  lines.forEach(({ start, end }) => {
+    ctx.beginPath();
+    ctx.moveTo(start.x, start.y);
+    ctx.lineTo(end.x, end.y);
+    ctx.stroke();
+  });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  if (activeTool !== Tool.Line || !isDrawing || !startPoint) return;
+
+  const canvas = canvasRef.current;
+  const ctx = canvas?.getContext("2d");
+  if (!canvas || !ctx) return;
+
+  const currentPoint = getMousePos(canvas, e);
+  drawAllLines(ctx, { start: startPoint, end: currentPoint }); // pass preview line
+};
+
+  // Draw preview line if it exists
+  if (previewLine) {
+    ctx.beginPath();
+    ctx.moveTo(previewLine.start.x, previewLine.start.y);
+    ctx.lineTo(previewLine.end.x, previewLine.end.y);
+    ctx.stroke();
+  }
+};
+
+  useEffect(() => {
+  const canvas = canvasRef.current;
+  const ctx = canvas?.getContext("2d");
+  if (!canvas || !ctx) return;
+
+  drawAllLines(ctx);
+}, [lines]);
+
+  
   return (
     <div className="absolute inset-0 justify-center items-center bg-gray-900 z-10">
       <canvas
