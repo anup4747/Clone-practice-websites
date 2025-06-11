@@ -28,7 +28,13 @@ export const CommandPallet: React.FC<CommandPalletProps> = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <motion.div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-30">
+    <motion.div
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+      className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-30"
+    >
       <div
         ref={modalRef}
         className="bg-gray-800 rounded-lg p-6 w-96 text-white"
