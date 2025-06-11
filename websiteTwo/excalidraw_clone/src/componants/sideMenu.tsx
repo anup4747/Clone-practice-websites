@@ -74,23 +74,6 @@ export const SideMenu: React.FC = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isResetTheCanvasOpen, setResetTheCanvasOpen] = useState(false);
 
-  const handleLoadFromFile = () => {
-    console.log("Load from file");
-    setIsModalOpen(false);
-  };
-  const handleExportAsImage = () => {
-    console.log("Export as image");
-    setIsExportImageOpen(false);
-  };
-  const handleSaveToDisk = () => {
-    console.log("Save to disk");
-    setIsSaveToOpen(false);
-  };
-  const handleExportToExcalidraw = () => {
-    console.log("Export to Excalidraw+");
-    setIsSaveToOpen(false);
-  };
-
   const openFileRef = useRef<HTMLDivElement>(null);
   const saveToRef = useRef<HTMLDivElement>(null);
   const exportImageRef = useRef<HTMLDivElement>(null);
