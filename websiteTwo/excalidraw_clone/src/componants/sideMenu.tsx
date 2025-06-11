@@ -17,41 +17,134 @@ import {
   AiOutlineDiscord,
   AiOutlineLeftSquare,
 } from "react-icons/ai";
+import { OpenFile } from "./openFile";
+import { SaveTo } from "./saveTo";
+import { LiveCollab } from "./liveCollab";
+import { ExportImage } from "./exportImage";
+import { ResetCanvas } from "./resetCanvas";
+import { Help } from "./help";
+import { FindOnCanvas } from "./findOnCanvas";
+import { CommandPallet } from "./commandPallet";
 
-interface sideItem {
+interface sideMenuItem {
   icon: React.ReactNode;
   label: string;
-  href: string;
+  onClick: () => void;
 }
 
-// Sample navigation items
-const sideMenuItems: sideItem[] = [
-  { label: "Open", href: "/", icon: <AiTwotoneFolder /> },
-  { label: "Save to..", href: "/about", icon: <AiOutlineDownload /> },
-  { label: "Export Image", href: "/services", icon: <AiOutlineExport /> },
+interface sideMenuLink {
+  label: string;
+  href: string;
+  icon: React.ReactNode;
+}
+
+const sideMenuLinks: sideMenuLink[] = [
   {
-    label: "Live Collabration",
-    href: "/contact",
-    icon: <AiOutlineUsergroupAdd />,
+    label: "ExcaliDraw+",
+    href: "https://plus.excalidraw.com/plus",
+    icon: <AiOutlineDingding />,
   },
   {
-    label: "Command Palette",
-    href: "/contact",
-    icon: <AiOutlineThunderbolt />,
+    label: "GitHub",
+    href: "https://github.com/excalidraw/excalidraw",
+    icon: <AiOutlineGithub />,
   },
-  { label: "Find on canvas", href: "/contact", icon: <AiOutlineSearch /> },
-  { label: "Help", href: "/contact", icon: <AiOutlineQuestionCircle /> },
-  { label: "Reset the canvas", href: "/contact", icon: <AiOutlineDelete /> },
-  { label: "ExcaliDraw+", href: "/contact", icon: <AiOutlineDingding /> },
-  { label: "GitHub", href: "/contact", icon: <AiOutlineGithub /> },
-  { label: "Twitter", href: "/contact", icon: <AiOutlineX /> },
-  { label: "Discord", href: "/contact", icon: <AiOutlineDiscord /> },
-  { label: "Signup", href: "/contact", icon: <AiOutlineLeftSquare /> },
+  { label: "Twitter", href: "https://x.com/excalidraw", icon: <AiOutlineX /> },
+  {
+    label: "Discord",
+    href: "https://discord.com/invite/UexuTaE",
+    icon: <AiOutlineDiscord />,
+  },
+  {
+    label: "Signup",
+    href: "https://app.excalidraw.com/sign-up",
+    icon: <AiOutlineLeftSquare />,
+  },
 ];
 
 export const SideMenu: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaveToOpen, setIsSaveToOpen] = useState(false);
+  const [isExportImageOpen, setIsExportImageOpen] = useState(false);
+  const [isLiveCollabOpen, setIsLiveCollabOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  const [isFindOnCanvasOpen, setFindOnCanvasOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const [isResetTheCanvasOpen, setResetTheCanvasOpen] = useState(false);
+
+  const handleLoadFromFile = () => {
+    console.log("Load from file");
+    setIsModalOpen(false);
+  };
+  const handleExportAsImage = () => {
+    console.log("Export as image");
+    setIsExportImageOpen(false);
+  };
+  const handleSaveToDisk = () => {
+    console.log("Save to disk");
+    setIsSaveToOpen(false);
+  };
+  const handleExportToExcalidraw = () => {
+    console.log("Export to Excalidraw+");
+    setIsSaveToOpen(false);
+  };
+
+  const openFileRef = useRef<HTMLDivElement>(null);
+  const saveToRef = useRef<HTMLDivElement>(null);
+  const exportImageRef = useRef<HTMLDivElement>(null);
+  const liveCollabRef = useRef<HTMLDivElement>(null);
+  const commandPaletteRef = useRef<HTMLDivElement>(null);
+  const findOnCanvasRef = useRef<HTMLDivElement>(null);
+  const helpRef = useRef<HTMLDivElement>(null);
+  const resetCanvasRef = useRef<HTMLDivElement>(null);
+
+  // Sample sidemenu option
+  const sideMenuItems: sideMenuItem[] = [
+    {
+      label: "Open",
+      icon: <AiTwotoneFolder />,
+      onClick: () => setIsModalOpen(true),
+    },
+    {
+      label: "Save to..",
+      icon: <AiOutlineDownload />,
+      onClick: () => setIsSaveToOpen(true),
+    },
+    {
+      label: "Export Image",
+      icon: <AiOutlineExport />,
+      onClick: () => setIsExportImageOpen(true),
+    },
+    {
+      label: "Live Collabration",
+
+      icon: <AiOutlineUsergroupAdd />,
+      onClick: () => setIsModalOpen(true),
+    },
+    {
+      label: "Command Palette",
+
+      icon: <AiOutlineThunderbolt />,
+      onClick: () => setIsModalOpen(true),
+    },
+    {
+      label: "Find on canvas",
+      icon: <AiOutlineSearch />,
+      onClick: () => setIsModalOpen(true),
+    },
+    {
+      label: "Help",
+      icon: <AiOutlineQuestionCircle />,
+      onClick: () => setIsModalOpen(true),
+    },
+    {
+      label: "Reset the canvas",
+      icon: <AiOutlineDelete />,
+      onClick: () => setResetTheCanvasOpen(true),
+    },
+  ];
 
   const handleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -99,13 +192,79 @@ export const SideMenu: React.FC = () => {
         >
           <div className="">
             {sideMenuItems.map((items) => (
-              <div className="text-white text-left cursor-pointer p-2 hover:bg-gray-700 flex space-x-2 rounded-lg">
+              <div
+                onClick={() => {
+                  items.onClick();
+                  setIsMenuOpen(false);
+                }}
+                className="text-white text-left cursor-pointer p-2 hover:bg-gray-700 flex space-x-2 rounded-lg"
+              >
                 <div className="text-white text-2xl">{items.icon}</div>
                 <div>{items.label}</div>
               </div>
             ))}
           </div>
+
+          <hr className="border-gray-600 mb-2 mt-2" />
+
+          <div className="">
+            {sideMenuLinks.map((items) => (
+              <div className="">
+                <a
+                  href={items.href}
+                  target="/blank"
+                  className="text-white text-left cursor-pointer p-2 hover:bg-gray-700 flex space-x-2 rounded-lg"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <div className="text-white text-2xl">{items.icon}</div>
+                  <div>{items.label}</div>
+                </a>
+              </div>
+            ))}
+          </div>
         </motion.section>
+      )}
+
+      {isModalOpen && (
+        <div ref={openFileRef}>
+          <OpenFile onClose={() => setIsModalOpen(false)} />
+        </div>
+      )}
+
+      {isSaveToOpen && (
+        <div ref={saveToRef}>
+          <SaveTo onClose={() => setIsSaveToOpen(false)} />
+        </div>
+      )}
+      {isExportImageOpen && (
+        <div ref={exportImageRef}>
+          <ExportImage onClose={() => setIsExportImageOpen(false)} />
+        </div>
+      )}
+      {isLiveCollabOpen && (
+        <div ref={liveCollabRef}>
+          <LiveCollab onClose={() => setIsLiveCollabOpen(false)} />
+        </div>
+      )}
+      {isCommandPaletteOpen && (
+        <div ref={commandPaletteRef}>
+          <CommandPallet onClose={() => setIsCommandPaletteOpen(false)} />
+        </div>
+      )}
+      {isFindOnCanvasOpen && (
+        <div ref={findOnCanvasRef}>
+          <FindOnCanvas onClose={() => setFindOnCanvasOpen(false)} />
+        </div>
+      )}
+      {isHelpOpen && (
+        <div ref={helpRef}>
+          <Help onClose={() => setIsHelpOpen(false)} />
+        </div>
+      )}
+      {isResetTheCanvasOpen && (
+        <div ref={resetCanvasRef}>
+          <ResetCanvas onClose={() => setResetTheCanvasOpen(false)} />
+        </div>
       )}
     </section>
   );

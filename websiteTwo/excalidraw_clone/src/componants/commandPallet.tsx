@@ -1,20 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-interface ExportImageProps {
+interface CommandPalletProps {
   onClose: () => void;
 }
 
-export const ExportImage: React.FC<ExportImageProps> = ({ onClose }) => {
+export const CommandPallet: React.FC<CommandPalletProps> = ({ onClose }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-30"
-    >
+    <motion.div className="fixed inset-0 flex items-center justify-center bg-opacity-50 z-30">
       <div className="bg-gray-800 rounded-lg p-6 w-96 text-white">
-        <h2 className="text-lg font-semibold">Export image</h2>
+        <h2 className="text-lg font-semibold">Command Pallet</h2>
         <p>Save your content here...</p>
         <button
           onClick={onClose}
