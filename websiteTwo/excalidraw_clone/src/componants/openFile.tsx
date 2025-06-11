@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { useEffect,useRef } from "react";
+import { useEffect, useRef } from "react";
 
 interface ModalProps {
   onClose: () => void;
@@ -15,13 +15,15 @@ interface OpenFileProps {
 }
 
 export const OpenFile: React.FC<OpenFileProps> = ({ onClose }) => {
-
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Handle clicks outside the modal
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
         onClose();
       }
     };
@@ -32,7 +34,7 @@ export const OpenFile: React.FC<OpenFileProps> = ({ onClose }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -41,11 +43,13 @@ export const OpenFile: React.FC<OpenFileProps> = ({ onClose }) => {
       style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
       className="fixed inset-0 flex items-center justify-center z-30 bg-opacity-10 "
     >
-      <div  ref={modalRef} className="bg-gray-800 rounded-2xl p-10 w-1/2  text-white">
-
+      <div
+        ref={modalRef}
+        className="bg-gray-800 rounded-2xl p-10 w-1/2  text-white"
+      >
         {/* Load from File Section */}
-        <p className="font-semibold text-left mb-2">Load from file</p>
-        <div className="bg-yellow-100 text-black p-8 rounded mb-4 flex items-center gap-x-10">
+        <p className="text-xl font-semibold text-left mb-2">Load from file</p>
+        <div className="bg-yellow-100 text-black p-8 rounded-xl mb-4 flex items-center gap-x-10">
           <span className="text-yellow-500 m-4">⚠️</span>
           <div>
             <p className="text-sm">
@@ -66,7 +70,7 @@ export const OpenFile: React.FC<OpenFileProps> = ({ onClose }) => {
           <div>
             <h2 className="font-extrabold mb-3 mt-3"> Export as image</h2>
 
-            <p className="text-xs text-center w-full" >
+            <p className="text-xs text-center w-full">
               Export the scene data as an image which you can import later.
             </p>
             <button className="w-56 px-3 text-xm mt-2 bg-gray-600 py-3 rounded hover:bg-gray-500 transition">
