@@ -153,17 +153,6 @@ const Canvas: React.FC<CanvasProps> = ({ onReset = () => {} }) => {
     ctx.stroke();
   });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-  if (activeTool !== Tool.Line || !isDrawing || !startPoint) return;
-
-  const canvas = canvasRef.current;
-  const ctx = canvas?.getContext("2d");
-  if (!canvas || !ctx) return;
-
-  const currentPoint = getMousePos(canvas, e);
-  drawAllLines(ctx, { start: startPoint, end: currentPoint }); // pass preview line
-};
-
   // Draw preview line if it exists
   if (previewLine) {
     ctx.beginPath();
