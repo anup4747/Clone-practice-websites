@@ -29,7 +29,11 @@ interface Line {
   end: Point;
 }
 
-const Canvas: React.FC = () => {
+interface CanvasProps {
+  onReset?: (resetFn: () => void) => void; // onReset accepts a function as an argument
+}
+
+const Canvas: React.FC<CanvasProps> = ({ onReset = () => {} }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { activeTool } = useTool();
   const [isDrawing, setIsDrawing] = useState(false);
@@ -57,6 +61,25 @@ const Canvas: React.FC = () => {
 
     return () => window.removeEventListener("resize", resizeCanvas);
   }, []);
+
+  // Function to reset the canvas
+  const resetCanvas = () => {
+    setLines([]); // Clear all lines
+    setStartPoint(null); // Clear the start point
+    setIsDrawing(false); // Stop any ongoing drawing
+    const canvas = canvasRef.current;
+    const ctx = canvas?.getContext("2d");
+    if (canvas && ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas visually
+    }
+  };
+
+  // Pass resetCanvas to the parent via onReset
+  useEffect(() => {
+    if (typeof onReset === "function") {
+      onReset(resetCanvas); // Only call onReset if it's a function
+    }
+  }, [onReset]);
 
   // Get mouse position relative to canvas
   const getMousePos = (

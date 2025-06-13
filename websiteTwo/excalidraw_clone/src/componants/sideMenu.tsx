@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion } from "framer-motion";
 import {
   AiOutlineMenu,
@@ -38,6 +38,10 @@ interface sideMenuLink {
   icon: React.ReactNode;
 }
 
+interface SideMenuProps {
+  onResetCanvas: () => void; // Prop to handle canvas reset
+}
+
 const sideMenuLinks: sideMenuLink[] = [
   {
     label: "ExcaliDraw+",
@@ -62,7 +66,8 @@ const sideMenuLinks: sideMenuLink[] = [
   },
 ];
 
-export const SideMenu: React.FC = () => {
+export const SideMenu: React.FC<SideMenuProps> = ({ onResetCanvas }) => {
+  // menu states
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -74,6 +79,7 @@ export const SideMenu: React.FC = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [isResetTheCanvasOpen, setResetTheCanvasOpen] = useState(false);
 
+  // Refs for each modal to detect outside clicks
   const openFileRef = useRef<HTMLDivElement>(null);
   const saveToRef = useRef<HTMLDivElement>(null);
   const exportImageRef = useRef<HTMLDivElement>(null);
@@ -246,7 +252,10 @@ export const SideMenu: React.FC = () => {
       )}
       {isResetTheCanvasOpen && (
         <div ref={resetCanvasRef}>
-          <ResetCanvas onClose={() => setResetTheCanvasOpen(false)} />
+          <ResetCanvas
+            onReset={onResetCanvas}
+            onClose={() => setResetTheCanvasOpen(false)}
+          />
         </div>
       )}
     </section>
