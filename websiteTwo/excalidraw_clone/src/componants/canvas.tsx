@@ -60,8 +60,8 @@ const Canvas: React.FC = () => {
         }
         localStorage.setItem("drawing", JSON.stringify(elements));
       },
-      [elements]
     );
+    [elements]
 
   });
 
@@ -124,7 +124,9 @@ const Canvas: React.FC = () => {
     };
     setElements((prev) => [...prev, newElement]);
     setIsDrawing(false);
-    setStartPoint(null);
+    setStartPoint(null); 
+   
+    // setElements([]); 
   };
 
   // Reset function
@@ -137,6 +139,8 @@ const Canvas: React.FC = () => {
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
   };
+
+  // setElements([]);
 
   return (
     <div className="absolute inset-0 justify-center items-center bg-gray-900 z-10">
