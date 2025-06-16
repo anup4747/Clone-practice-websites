@@ -2,13 +2,6 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 
-interface ModalProps {
-  onClose: () => void;
-  onLoadFromFile: () => void;
-  onExportasImage: () => void;
-  onSaveToDisk: () => void;
-  onExportToExcalidraw: () => void;
-}
 
 interface OpenFileProps {
   onClose: () => void;

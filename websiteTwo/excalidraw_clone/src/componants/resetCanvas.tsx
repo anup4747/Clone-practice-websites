@@ -27,6 +27,7 @@ export const ResetCanvas: React.FC<ResetCanvasProps> = ({ onClose,onReset }) => 
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [onClose]);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}

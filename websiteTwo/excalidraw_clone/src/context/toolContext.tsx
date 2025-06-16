@@ -1,23 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-
-// Use the same Tool enum as in ToolsMenu
-enum Tool {
-  None = "none",
-  Hand = "hand",
-  Selection = "selection",
-  Square = "square",
-  Diamond = "diamond",
-  Circle = "circle",
-  Arrow = "arrow",
-  Line = "line",
-  Pencil = "pencil",
-  Text = "text",
-  Image = "image",
-  Eraser = "eraser",
-  PaintBrush = "paintBrush",
-  Star = "star",
-  PaintBucket = "paintBucket",
-}
+import Tool from "../data/data";
 
 interface ToolContextType {
   activeTool: Tool;

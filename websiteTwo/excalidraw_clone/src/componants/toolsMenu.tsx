@@ -20,25 +20,8 @@ import { FaPaintBrush } from "react-icons/fa";
 import { MdOutlineStarBorder } from "react-icons/md";
 import { GiPaintBucket } from "react-icons/gi";
 import { motion } from "framer-motion";
-import { useTool } from "./toolContext";
-
-enum Tool {
-  None = "none",
-  Hand = "hand",
-  Selection = "selection",
-  Square = "square",
-  Diamond = "diamond",
-  Circle = "circle",
-  Arrow = "arrow",
-  Line = "line",
-  Pencil = "pencil",
-  Text = "text",
-  Image = "image",
-  Eraser = "eraser",
-  PaintBrush = "paintBrush",
-  Star = "star",
-  PaintBucket = "paintBucket",
-}
+import { useTool } from "../context/toolContext";
+import Tool from "../data/data"
 
 interface ToolConfig {
   name: Tool;
