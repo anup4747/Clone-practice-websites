@@ -24,6 +24,7 @@ const Canvas: React.FC = () => {
     null
   );  
 
+  // Initialize Rough.js
   useEffect(() => {
     if (!canvasRef.current) return;
 
@@ -41,6 +42,7 @@ const Canvas: React.FC = () => {
     }
   }, []);
 
+  // rendering all elements on canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas?.getContext("2d");
@@ -65,6 +67,7 @@ const Canvas: React.FC = () => {
 
   });
 
+  // handling mouse events
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const { offsetX, offsetY } = e.nativeEvent;
     setStartPoint({ x: offsetX, y: offsetY });

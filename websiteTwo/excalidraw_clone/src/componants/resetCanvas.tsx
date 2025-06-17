@@ -4,10 +4,10 @@ import { useRef, useEffect } from "react";
 
 interface ResetCanvasProps {
   onClose: () => void;
-  onReset: () => void;
+  // onReset: () => void;
 }
 
-export const ResetCanvas: React.FC<ResetCanvasProps> = ({ onClose,onReset }) => {
+export const ResetCanvas: React.FC<ResetCanvasProps> = ({ onClose }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Handle clicks outside the modal

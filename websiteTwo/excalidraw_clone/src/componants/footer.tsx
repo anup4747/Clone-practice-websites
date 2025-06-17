@@ -24,6 +24,7 @@ export const Footer: React.FC = () => {
     setFindMe(!findMe);
   };
 
+  // handle mouse event
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

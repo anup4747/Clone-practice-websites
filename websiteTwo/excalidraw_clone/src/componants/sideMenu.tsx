@@ -213,7 +213,8 @@ export const SideMenu: React.FC = () => {
           </div>
         </motion.section>
       )}
-
+      
+      {/* all side menu componanrts */}
       {isModalOpen && (
         <div ref={openFileRef}>
           <OpenFile onClose={() => setIsModalOpen(false)} />
