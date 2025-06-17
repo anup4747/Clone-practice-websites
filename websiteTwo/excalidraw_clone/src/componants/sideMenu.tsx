@@ -66,7 +66,7 @@ const sideMenuLinks: sideMenuLink[] = [
   },
 ];
 
-export const SideMenu: React.FC = () => {
+export const SideMenu: React.FC<SideMenuProps> = ({ onResetCanvas }) => {
   // menu states
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -213,7 +213,7 @@ export const SideMenu: React.FC = () => {
           </div>
         </motion.section>
       )}
-      
+
       {/* all side menu componanrts */}
       {isModalOpen && (
         <div ref={openFileRef}>
@@ -254,7 +254,7 @@ export const SideMenu: React.FC = () => {
       {isResetTheCanvasOpen && (
         <div ref={resetCanvasRef}>
           <ResetCanvas
-            // onReset={onResetCanvas}
+            onReset={onResetCanvas}
             onClose={() => setResetTheCanvasOpen(false)}
           />
         </div>

@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useRef,useState } from "react";
 import { ToolsMenu } from "../componants/toolsMenu";
 import { SideMenu } from "../componants/sideMenu";
 import { Footer } from "../componants/footer";
 import { ToolProvider } from "../context/toolContext";
 import Canvas from "../componants/canvas";
-import { useState,useCallback } from "react";
 
 export const Home: React.FC = () => {
- 
+
+  const [elements, setElements] = useState([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Reset the canvas
+  const onResetCanvas = () => {
+    setElements([]);
+    localStorage.removeItem("drawing");
+    const canvas = canvasRef.current;
+    const context = canvas?.getContext("2d");
+    if (canvas && context) {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  };
+
   return (
     <section>
       <ToolProvider>
         <ToolsMenu />
-        <SideMenu/>
-        <Canvas/>
+        <SideMenu onResetCanvas={onResetCanvas}/>
+        <Canvas elements={elements}
+          setElements={setElements}
+          canvasRef={canvasRef}/>
         <Footer />
       </ToolProvider>
     </section>

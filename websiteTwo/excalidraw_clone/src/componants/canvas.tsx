@@ -14,11 +14,18 @@ interface Element {
   style: { strokeColor?: string; strokeWidth?: number; fill?: string };
 }
 
-const Canvas: React.FC = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+interface CanvasProps {
+  elements: Element[];
+  setElements: React.Dispatch<React.SetStateAction<Element[]>>;
+  canvasRef: React.RefObject<HTMLCanvasElement>;
+}
+
+
+const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => {
+  // const canvasRef = useRef<HTMLCanvasElement>(null);
   const roughCanvasRef = useRef<RoughCanvas | null>(null);
   const { activeTool } = useTool();
-  const [elements, setElements] = useState<Element[]>([]);
+  // const [elements, setElements] = useState<Element[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
@@ -131,19 +138,6 @@ const Canvas: React.FC = () => {
    
     // setElements([]); 
   };
-
-  // Reset function
-  const onResetCanvas = () => {
-    setElements([]);
-    localStorage.removeItem("drawing");
-    const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (canvas && context) {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  };
-
-  // setElements([]);
 
   return (
     <div className="absolute inset-0 justify-center items-center bg-gray-900 z-10">
