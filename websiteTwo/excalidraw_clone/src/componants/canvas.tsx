@@ -22,10 +22,8 @@ interface CanvasProps {
 
 
 const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => {
-  // const canvasRef = useRef<HTMLCanvasElement>(null);
   const roughCanvasRef = useRef<RoughCanvas | null>(null);
   const { activeTool } = useTool();
-  // const [elements, setElements] = useState<Element[]>([]);
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
@@ -66,7 +64,15 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
             stroke: el.style.strokeColor || "white",
             strokeWidth: el.style.strokeWidth || 2,
           });
-        }
+        }else if (el.type === Tool.Rectangle) {
+        const width = el.x2 - el.x1;
+        const height = el.y2 - el.y1;
+        roughCanvas.rectangle(el.x1, el.y1, width, height, {
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth || 2,
+          fill: el.style.fill || undefined,
+        });
+      }
         localStorage.setItem("drawing", JSON.stringify(elements));
       },
     );
@@ -104,6 +110,14 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
           stroke: el.style.strokeColor || "rgba(128, 128, 128, 0.9)",
           strokeWidth: el.style.strokeWidth || 2,
         });
+      }else if (el.type === Tool.Rectangle) {
+        const width = el.x2 - el.x1;
+        const height = el.y2 - el.y1;
+        roughCanvas.rectangle(el.x1, el.y1, width, height, {
+          stroke: el.style.strokeColor || "black",
+          strokeWidth: el.style.strokeWidth || 2,
+          fill: el.style.fill || undefined,
+        });
       }
     });
 
@@ -111,6 +125,14 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
       roughCanvas.line(startPoint.x, startPoint.y, offsetX, offsetY, {
         stroke: "rgba(128, 128, 128, 0.9)",
         strokeWidth: 2,
+      });
+    }else if (activeTool === Tool.Rectangle) {
+      const width = offsetX - startPoint.x;
+      const height = offsetY - startPoint.y;
+      roughCanvas.rectangle(startPoint.x, startPoint.y, width, height, {
+        stroke: "rgba(128, 128, 128, 0.5)",
+        strokeWidth: 2,
+        fill: "rgba(0, 0, 255, 0.3)",
       });
     }
 

@@ -33,7 +33,7 @@ interface ToolConfig {
 const tools: ToolConfig[] = [
   { name: Tool.Hand, icon: <HiOutlineHand />, key: "h" },
   { name: Tool.Selection, icon: <BiNavigation />, key: "1" },
-  { name: Tool.Square, icon: <BiSquareRounded />, key: "2" },
+  { name: Tool.Rectangle, icon: <BiSquareRounded />, key: "2" },
   { name: Tool.Diamond, icon: <BsDiamond />, key: "3" },
   { name: Tool.Circle, icon: <BiCircle />, key: "4" },
   { name: Tool.Arrow, icon: <FiArrowRight />, key: "5" },

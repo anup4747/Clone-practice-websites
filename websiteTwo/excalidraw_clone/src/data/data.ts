@@ -2,7 +2,7 @@ enum Tool {
   None = "none",
   Hand = "hand",
   Selection = "selection",
-  Square = "square",
+  Rectangle = "rectangle",
   Diamond = "diamond",
   Circle = "circle",
   Arrow = "arrow",

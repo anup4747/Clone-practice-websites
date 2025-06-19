@@ -53,7 +53,6 @@ export const ResetCanvas: React.FC<ResetCanvasProps> = ({ onClose,onReset }) => 
             Close
           </button>
           <button
-            // onClick={()=> {onClose(); onReset();}}
             onClick={()=> {onClose(); onReset();}}
             className="text-xm mt-4 text-black bg-gray-300 py-3 px-4  rounded hover:bg-gray-400 transition"
           >
