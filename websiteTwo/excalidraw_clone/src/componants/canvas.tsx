@@ -20,14 +20,17 @@ interface CanvasProps {
   canvasRef: React.RefObject<HTMLCanvasElement>;
 }
 
-
-const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => {
+const Canvas: React.FC<CanvasProps> = ({
+  elements,
+  setElements,
+  canvasRef,
+}) => {
   const roughCanvasRef = useRef<RoughCanvas | null>(null);
   const { activeTool } = useTool();
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
-  );  
+  );
 
   // Initialize Rough.js
   useEffect(() => {
@@ -57,14 +60,13 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
 
     context.clearRect(0, 0, canvas.width, canvas.height);
 
-    elements.forEach(
-      (el) => {
-        if (el.type === Tool.Line) {
-          roughCanvas.line(el.x1, el.y1, el.x2, el.y2, {
-            stroke: el.style.strokeColor || "white",
-            strokeWidth: el.style.strokeWidth || 2,
-          });
-        }else if (el.type === Tool.Rectangle) {
+    elements.forEach((el) => {
+      if (el.type === Tool.Line) {
+        roughCanvas.line(el.x1, el.y1, el.x2, el.y2, {
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth || 2,
+        });
+      } else if (el.type === Tool.Rectangle) {
         const width = el.x2 - el.x1;
         const height = el.y2 - el.y1;
         roughCanvas.rectangle(el.x1, el.y1, width, height, {
@@ -72,12 +74,20 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
+      } else if (el.type === Tool.Ellipse) {
+        const width = el.x2 - el.x1;
+        const height = el.y2 - el.y1;
+        const centerX = (el.x1 + el.x2) / 2;
+        const centerY = (el.y1 + el.y2) / 2;
+        roughCanvas.ellipse(centerX, centerY, width, height, {
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth || 2,
+          fill: el.style.fill || undefined,
+        });
       }
-        localStorage.setItem("drawing", JSON.stringify(elements));
-      },
-    );
-    [elements]
-
+      localStorage.setItem("drawing", JSON.stringify(elements));
+    });
+    [elements];
   });
 
   // handling mouse events
@@ -110,11 +120,21 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
           stroke: el.style.strokeColor || "rgba(128, 128, 128, 0.9)",
           strokeWidth: el.style.strokeWidth || 2,
         });
-      }else if (el.type === Tool.Rectangle) {
+      } else if (el.type === Tool.Rectangle) {
         const width = el.x2 - el.x1;
         const height = el.y2 - el.y1;
         roughCanvas.rectangle(el.x1, el.y1, width, height, {
-          stroke: el.style.strokeColor || "black",
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth || 2,
+          fill: el.style.fill || undefined,
+        });
+      } else if (el.type === Tool.Ellipse) {
+        const width = el.x2 - el.x1;
+        const height = el.y2 - el.y1;
+        const centerX = (el.x1 + el.x2) / 2;
+        const centerY = (el.y1 + el.y2) / 2;
+        roughCanvas.ellipse(centerX, centerY, width, height, {
+          stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
@@ -126,7 +146,7 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
         stroke: "rgba(128, 128, 128, 0.9)",
         strokeWidth: 2,
       });
-    }else if (activeTool === Tool.Rectangle) {
+    } else if (activeTool === Tool.Rectangle) {
       const width = offsetX - startPoint.x;
       const height = offsetY - startPoint.y;
       roughCanvas.rectangle(startPoint.x, startPoint.y, width, height, {
@@ -135,7 +155,6 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
         fill: "rgba(0, 0, 255, 0.3)",
       });
     }
-
   };
 
   const handleMouseUp = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -156,9 +175,9 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
     };
     setElements((prev) => [...prev, newElement]);
     setIsDrawing(false);
-    setStartPoint(null); 
-   
-    // setElements([]); 
+    setStartPoint(null);
+
+    // setElements([]);
   };
 
   return (
@@ -172,9 +191,7 @@ const Canvas: React.FC<CanvasProps> = ({ elements, setElements, canvasRef }) => 
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       />
-
     </div>
-    
   );
 };
 

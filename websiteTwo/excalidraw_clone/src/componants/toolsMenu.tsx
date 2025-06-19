@@ -35,7 +35,7 @@ const tools: ToolConfig[] = [
   { name: Tool.Selection, icon: <BiNavigation />, key: "1" },
   { name: Tool.Rectangle, icon: <BiSquareRounded />, key: "2" },
   { name: Tool.Diamond, icon: <BsDiamond />, key: "3" },
-  { name: Tool.Circle, icon: <BiCircle />, key: "4" },
+  { name: Tool.Ellipse, icon: <BiCircle />, key: "4" },
   { name: Tool.Arrow, icon: <FiArrowRight />, key: "5" },
   { name: Tool.Line, icon: <IoMdRemove />, key: "6" },
   { name: Tool.Pencil, icon: <SlPencil />, key: "7" },
@@ -56,6 +56,7 @@ export const ToolsMenu: React.FC = () => {
   const [activeTool, setActiveTool] = useState<Tool>(Tool.None);
   const extraToolsRef = useRef<HTMLDivElement>(null);
   const { activeTool: activeToolContext, setActiveTool: setActiveToolContext } = useTool();
+
   const handleLockToggle = () => {
     setLocked(!locked);
   };

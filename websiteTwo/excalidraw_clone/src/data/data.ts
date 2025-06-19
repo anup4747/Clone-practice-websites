@@ -4,7 +4,7 @@ enum Tool {
   Selection = "selection",
   Rectangle = "rectangle",
   Diamond = "diamond",
-  Circle = "circle",
+  Ellipse = "ellipse",
   Arrow = "arrow",
   Line = "line",
   Pencil = "pencil",
