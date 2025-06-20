@@ -150,7 +150,17 @@ const Canvas: React.FC<CanvasProps> = ({
       const width = offsetX - startPoint.x;
       const height = offsetY - startPoint.y;
       roughCanvas.rectangle(startPoint.x, startPoint.y, width, height, {
-        stroke: "rgba(128, 128, 128, 0.5)",
+        stroke: "rgba(128, 128, 128, 0.9)",
+        strokeWidth: 2,
+        fill: "rgba(0, 0, 255, 0.3)",
+      });
+    } else if (activeTool === Tool.Ellipse) {
+      const width = offsetX - startPoint.x;
+      const height = offsetY - startPoint.y;
+      const centerX = (startPoint.x + offsetX) / 2;
+      const centerY = (startPoint.y + offsetY) / 2;
+      roughCanvas.ellipse(centerX, centerY, width, height, {
+        stroke: "rgba(128, 128, 128, 0.9)",
         strokeWidth: 2,
         fill: "rgba(0, 0, 255, 0.3)",
       });
