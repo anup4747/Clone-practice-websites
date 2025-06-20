@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import { SlPencil } from "react-icons/sl";
-import { FiArrowRight } from "react-icons/fi";
 import { IoMdRemove } from "react-icons/io";
 import { HiOutlineHand } from "react-icons/hi";
 import {
@@ -9,6 +8,7 @@ import {
   BiLock,
   BiText,
   BiCircle,
+  BiSolidRightArrowAlt,
   BiNavigation,
   BiPhotoAlbum,
   BiEraser,
@@ -36,7 +36,7 @@ const tools: ToolConfig[] = [
   { name: Tool.Rectangle, icon: <BiSquareRounded />, key: "2" },
   { name: Tool.Diamond, icon: <BsDiamond />, key: "3" },
   { name: Tool.Ellipse, icon: <BiCircle />, key: "4" },
-  { name: Tool.Arrow, icon: <FiArrowRight />, key: "5" },
+  { name: Tool.Arrow, icon: <BiSolidRightArrowAlt />, key: "5" },
   { name: Tool.Line, icon: <IoMdRemove />, key: "6" },
   { name: Tool.Pencil, icon: <SlPencil />, key: "7" },
   { name: Tool.Text, icon: <BiText />, key: "8" },

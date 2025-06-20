@@ -50,6 +50,28 @@ const Canvas: React.FC<CanvasProps> = ({
     }
   }, []);
 
+  const drawArrow = (roughCanvas: RoughCanvas, x1:number, y1:number, x2:number, y2:number, style: Element["style"]) =>{
+    roughCanvas.line(x1,y1,x2,y2 ,{
+      stroke: style.strokeColor || "white",
+      strokeWidth: style.strokeWidth || 2
+    });
+
+    const angle = Math.atan2(y2-y1, x2-x1);
+    const arrowSize = 15;
+    const arrowPoints = [
+      [x2,y2],
+      [x2 - arrowSize * Math.cos(angle - Math.PI / 6), y2 - arrowSize * Math.sin(angle - Math.PI / 6)], // Left wing
+      [x2 - arrowSize * Math.cos(angle + Math.PI / 6), y2 - arrowSize * Math.sin(angle + Math.PI / 6)], // Right wing
+    ];
+
+    roughCanvas.polygon(arrowPoints, {
+      stroke: style.strokeColor || "white",
+      strokeWidth: style.strokeWidth || 2,
+      fill: style.strokeColor || "white",
+      fillStyle: "solid",
+    });
+  }
+
   // rendering all elements on canvas
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -84,6 +106,8 @@ const Canvas: React.FC<CanvasProps> = ({
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
+      }else if (el.type === Tool.Arrow) {
+        drawArrow(roughCanvas, el.x1, el.y1, el.x2, el.y2, el.style);
       }
       localStorage.setItem("drawing", JSON.stringify(elements));
     });
@@ -138,6 +162,8 @@ const Canvas: React.FC<CanvasProps> = ({
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
+      }else if (el.type === Tool.Arrow) {
+        drawArrow(roughCanvas, el.x1, el.y1, el.x2, el.y2, el.style);
       }
     });
 
@@ -163,6 +189,11 @@ const Canvas: React.FC<CanvasProps> = ({
         stroke: "rgba(128, 128, 128, 0.9)",
         strokeWidth: 2,
         fill: "rgba(0, 0, 255, 0.3)",
+      });
+    }else if (activeTool === Tool.Arrow) {
+      drawArrow(roughCanvas, startPoint.x, startPoint.y, offsetX, offsetY, {
+        strokeColor: "rgba(128, 128, 128, 0.5)",
+        strokeWidth: 2,
       });
     }
   };
