@@ -27,12 +27,14 @@ import { FindOnCanvas } from "./findOnCanvas";
 import { CommandPallet } from "./commandPallet";
 
 interface sideMenuItem {
+  key:string;
   icon: React.ReactNode;
   label: string;
   onClick: () => void;
 }
 
 interface sideMenuLink {
+  key:string;
   label: string;
   href: string;
   icon: React.ReactNode;
@@ -44,22 +46,26 @@ interface SideMenuProps {
 
 const sideMenuLinks: sideMenuLink[] = [
   {
+    key:"1",
     label: "ExcaliDraw+",
     href: "https://plus.excalidraw.com/plus",
     icon: <AiOutlineDingding />,
   },
   {
+    key:"2",
     label: "GitHub",
     href: "https://github.com/excalidraw/excalidraw",
     icon: <AiOutlineGithub />,
   },
-  { label: "Twitter", href: "https://x.com/excalidraw", icon: <AiOutlineX /> },
+  {key:"3", label: "Twitter", href: "https://x.com/excalidraw", icon: <AiOutlineX /> },
   {
+    key:"4",
     label: "Discord",
     href: "https://discord.com/invite/UexuTaE",
     icon: <AiOutlineDiscord />,
   },
   {
+    key:"5",
     label: "Signup",
     href: "https://app.excalidraw.com/sign-up",
     icon: <AiOutlineLeftSquare />,
@@ -92,43 +98,49 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onResetCanvas }) => {
   // Sample sidemenu option
   const sideMenuItems: sideMenuItem[] = [
     {
+      key:"1",
       label: "Open",
       icon: <AiTwotoneFolder />,
       onClick: () => setIsModalOpen(true),
     },
     {
+      key:"2",
       label: "Save to..",
       icon: <AiOutlineDownload />,
       onClick: () => setIsSaveToOpen(true),
     },
     {
+      key:"3",
       label: "Export Image",
       icon: <AiOutlineExport />,
       onClick: () => setIsExportImageOpen(true),
     },
     {
+      key:"4",
       label: "Live Collabration",
-
       icon: <AiOutlineUsergroupAdd />,
       onClick: () => setIsLiveCollabOpen(true),
     },
     {
+      key:"5",
       label: "Command Palette",
-
       icon: <AiOutlineThunderbolt />,
       onClick: () => setIsCommandPaletteOpen(true),
     },
     {
+      key:"6",
       label: "Find on canvas",
       icon: <AiOutlineSearch />,
       onClick: () => setFindOnCanvasOpen(true),
     },
     {
+      key:"7",
       label: "Help",
       icon: <AiOutlineQuestionCircle />,
       onClick: () => setIsHelpOpen(true),
     },
     {
+      key:"8",
       label: "Reset the canvas",
       icon: <AiOutlineDelete />,
       onClick: () => setResetTheCanvasOpen(true),
@@ -182,6 +194,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onResetCanvas }) => {
           <div className="">
             {sideMenuItems.map((items) => (
               <div
+                key={items.key}
                 onClick={() => {
                   items.onClick();
                   setIsMenuOpen(false);
@@ -198,7 +211,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({ onResetCanvas }) => {
 
           <div className="">
             {sideMenuLinks.map((items) => (
-              <div className="">
+              <div className="" key={items.key}>
                 <a
                   href={items.href}
                   target="/blank"
