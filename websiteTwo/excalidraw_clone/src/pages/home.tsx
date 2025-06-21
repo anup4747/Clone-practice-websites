@@ -19,6 +19,7 @@ export const Home: React.FC = () => {
     if (canvas && context) {
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
+    // console.log(localStorage);
   };
 
   return (

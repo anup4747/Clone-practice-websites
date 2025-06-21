@@ -7,7 +7,7 @@ enum Tool {
   Ellipse = "ellipse",
   Arrow = "arrow",
   Line = "line",
-  Pencil = "pencil",
+  Draw = "draw",
   Text = "text",
   Image = "image",
   Eraser = "eraser",

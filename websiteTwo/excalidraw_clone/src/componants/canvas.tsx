@@ -7,10 +7,11 @@ import { RoughCanvas } from "roughjs/bin/canvas";
 interface Element {
   id: string;
   type: Tool;
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
+  x1?: number;
+  y1?: number;
+  x2?: number;
+  y2?: number;
+  points?:[x:number, y:number][];
   style: { strokeColor?: string; strokeWidth?: number; fill?: string };
 }
 
@@ -31,6 +32,7 @@ const Canvas: React.FC<CanvasProps> = ({
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
   );
+  const [currentPoints, setCurrentPoints] = useState<[ x: number, y: number ][]>([]);
 
   // Initialize Rough.js
   useEffect(() => {
@@ -84,30 +86,35 @@ const Canvas: React.FC<CanvasProps> = ({
 
     elements.forEach((el) => {
       if (el.type === Tool.Line) {
-        roughCanvas.line(el.x1, el.y1, el.x2, el.y2, {
+        roughCanvas.line(el.x1!, el.y1!, el.x2!, el.y2!, {
           stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
         });
       } else if (el.type === Tool.Rectangle) {
-        const width = el.x2 - el.x1;
-        const height = el.y2 - el.y1;
-        roughCanvas.rectangle(el.x1, el.y1, width, height, {
+        const width = el.x2! - el.x1!;
+        const height = el.y2! - el.y1!;
+        roughCanvas.rectangle(el.x1!, el.y1!, width, height, {
           stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
       } else if (el.type === Tool.Ellipse) {
-        const width = el.x2 - el.x1;
-        const height = el.y2 - el.y1;
-        const centerX = (el.x1 + el.x2) / 2;
-        const centerY = (el.y1 + el.y2) / 2;
+        const width = el.x2! - el.x1!;
+        const height = el.y2! - el.y1!;
+        const centerX = (el.x1! + el.x2!) / 2;
+        const centerY = (el.y1! + el.y2!) / 2;
         roughCanvas.ellipse(centerX, centerY, width, height, {
           stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
       }else if (el.type === Tool.Arrow) {
-        drawArrow(roughCanvas, el.x1, el.y1, el.x2, el.y2, el.style);
+        drawArrow(roughCanvas, el.x1!, el.y1!, el.x2!, el.y2!, el.style);
+      } else if (el.type === Tool.Draw){
+        roughCanvas.linearPath(el.points!, {
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth || 2,
+        })
       }
       localStorage.setItem("drawing", JSON.stringify(elements));
     });
@@ -140,30 +147,35 @@ const Canvas: React.FC<CanvasProps> = ({
 
     elements.forEach((el) => {
       if (el.type === Tool.Line) {
-        roughCanvas.line(el.x1, el.y1, el.x2, el.y2, {
+        roughCanvas.line(el.x1!, el.y1!, el.x2!, el.y2!, {
           stroke: el.style.strokeColor || "rgba(128, 128, 128, 0.9)",
           strokeWidth: el.style.strokeWidth || 2,
         });
       } else if (el.type === Tool.Rectangle) {
-        const width = el.x2 - el.x1;
-        const height = el.y2 - el.y1;
-        roughCanvas.rectangle(el.x1, el.y1, width, height, {
+        const width = el.x2! - el.x1!;
+        const height = el.y2! - el.y1!;
+        roughCanvas.rectangle(el.x1!, el.y1!, width, height, {
           stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
       } else if (el.type === Tool.Ellipse) {
-        const width = el.x2 - el.x1;
-        const height = el.y2 - el.y1;
-        const centerX = (el.x1 + el.x2) / 2;
-        const centerY = (el.y1 + el.y2) / 2;
+        const width = el.x2! - el.x1!;
+        const height = el.y2! - el.y1!;
+        const centerX = (el.x1! + el.x2!) / 2;
+        const centerY = (el.y1! + el.y2!) / 2;
         roughCanvas.ellipse(centerX, centerY, width, height, {
           stroke: el.style.strokeColor || "white",
           strokeWidth: el.style.strokeWidth || 2,
           fill: el.style.fill || undefined,
         });
       }else if (el.type === Tool.Arrow) {
-        drawArrow(roughCanvas, el.x1, el.y1, el.x2, el.y2, el.style);
+        drawArrow(roughCanvas, el.x1!, el.y1!, el.x2!, el.y2!, el.style);
+      }else if (el.type === Tool.Draw) {
+        roughCanvas.linearPath(el.points!, {
+          stroke: el.style.strokeColor || "black",
+          strokeWidth: el.style.strokeWidth || 2,
+        });
       }
     });
 
@@ -195,6 +207,14 @@ const Canvas: React.FC<CanvasProps> = ({
         strokeColor: "rgba(128, 128, 128, 0.5)",
         strokeWidth: 2,
       });
+    }else if (activeTool === Tool.Draw) {
+      const newPoints = [...currentPoints, [ offsetX, offsetY ]] as [number, number][];
+      // console.log(newPoints);
+      setCurrentPoints(newPoints);
+      roughCanvas.linearPath(newPoints!, {
+        stroke: "rgba(128, 128, 128, 0.5)",
+        strokeWidth: 2,
+      });
     }
   };
 
@@ -209,6 +229,7 @@ const Canvas: React.FC<CanvasProps> = ({
       y1: startPoint.y,
       x2: offsetX,
       y2: offsetY,
+      points:[...currentPoints, [offsetX, offsetY]],
       style: {
         strokeColor: "white",
         strokeWidth: 2,

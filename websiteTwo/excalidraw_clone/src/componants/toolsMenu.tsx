@@ -38,7 +38,7 @@ const tools: ToolConfig[] = [
   { name: Tool.Ellipse, icon: <BiCircle />, key: "4" },
   { name: Tool.Arrow, icon: <BiSolidRightArrowAlt />, key: "5" },
   { name: Tool.Line, icon: <IoMdRemove />, key: "6" },
-  { name: Tool.Pencil, icon: <SlPencil />, key: "7" },
+  { name: Tool.Draw, icon: <SlPencil />, key: "7" },
   { name: Tool.Text, icon: <BiText />, key: "8" },
   { name: Tool.Image, icon: <BiPhotoAlbum />, key: "9" },
   { name: Tool.Eraser, icon: <BiEraser />, key: "0" },
