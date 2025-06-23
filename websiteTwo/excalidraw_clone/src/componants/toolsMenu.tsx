@@ -53,7 +53,6 @@ const extraTools: ToolConfig[] = [
 export const ToolsMenu: React.FC = () => {
   const [locked, setLocked] = useState<boolean>(false);
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [activeTool, setActiveTool] = useState<Tool>(Tool.None);
   const extraToolsRef = useRef<HTMLDivElement>(null);
   const { activeTool: activeToolContext, setActiveTool: setActiveToolContext } = useTool();
 
@@ -67,7 +66,6 @@ export const ToolsMenu: React.FC = () => {
 
   const selectTool = (tool: Tool) => {
     console.log(`Selecting tool: ${tool}`);
-    setActiveTool(tool);
     setActiveToolContext(tool); 
     if (tool !== Tool.None) {
       setIsMenuOpen(false);
@@ -148,7 +146,7 @@ export const ToolsMenu: React.FC = () => {
               key={tool.name}
               tool={tool.name}
               icon={tool.icon}
-              isActive={activeTool === tool.name}
+              isActive={activeToolContext === tool.name}
               onClick={() => selectTool(tool.name)}
             />
           ))}

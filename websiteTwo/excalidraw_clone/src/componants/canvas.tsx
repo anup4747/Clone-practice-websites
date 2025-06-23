@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useTool } from "../context/toolContext";
 import Tool from "../data/data";
 import { RoughCanvas } from "roughjs/bin/canvas";
+import { style } from "framer-motion/client";
 
 // Define Element interface for storing drawn shapes
 interface Element {
@@ -13,6 +14,9 @@ interface Element {
   y2?: number;
   text?: string;
   points?: [x: number, y: number][];
+  src?: string;
+  width?: number;
+  height?: number;
   style: {
     strokeColor?: string;
     strokeWidth?: number;
@@ -33,7 +37,7 @@ const Canvas: React.FC<CanvasProps> = ({
   canvasRef,
 }) => {
   const roughCanvasRef = useRef<RoughCanvas | null>(null);
-  const { activeTool } = useTool();
+  const { activeTool, setActiveTool } = useTool();
   const [isDrawing, setIsDrawing] = useState(false);
   const [startPoint, setStartPoint] = useState<{ x: number; y: number } | null>(
     null
@@ -47,6 +51,8 @@ const Canvas: React.FC<CanvasProps> = ({
     x: number;
     y: number;
   } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
 
   // Initialize Rough.js
   useEffect(() => {
@@ -101,6 +107,40 @@ const Canvas: React.FC<CanvasProps> = ({
     });
   };
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) =>{
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    const img = new Image();
+    reader.onload = (event) =>{
+      
+      img.onload = () => {
+        const targetHeight = 500;
+        console.log(img.width);
+        console.log(img.height);
+        const aspectRatio = img.width / img.height;
+        const scaledWidth = targetHeight * aspectRatio;
+        const newElement: Element = {
+          id: crypto.randomUUID(),
+          type: Tool.Image,
+          x1: startPoint?.x || 100,
+          y1: startPoint?.y || 100,
+          src:event.target?.result as string,
+          width: scaledWidth,
+          height: targetHeight,
+          style: {},
+        }
+        setElements((prev) => [...prev, newElement]);
+        setActiveTool(Tool.None);
+      }
+      img.src = event.target?.result as string;
+    }
+    reader.readAsDataURL(file);
+    e.target.value = "";
+    
+  }
+
   // rendering all elements on canvas
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -146,6 +186,10 @@ const Canvas: React.FC<CanvasProps> = ({
         context.font = el.style.font || "16px Arial";
         context.fillStyle = el.style.strokeColor || "white";
         context.fillText(el.text!, el.x1!, el.y1!);
+      } else if (el.type === Tool.Image){
+        const img = new Image();
+        img.src = el.src!;
+        context!.drawImage(img, el.x1!, el.y1!, el.width!, el.height!);
       }
       localStorage.setItem("drawing", JSON.stringify(elements));
     });
@@ -161,7 +205,10 @@ const Canvas: React.FC<CanvasProps> = ({
       setTextInputPosition({ x: offsetX, y: offsetY });
       setIsTextInputActive(true);
       setTimeout(() => textInputRef.current?.focus(), 0);
-    } else {
+    } else if (activeTool === Tool.Image){
+      fileInputRef.current?.click();
+    } 
+    else {
       setIsDrawing(true);
     }
   };
@@ -218,6 +265,10 @@ const Canvas: React.FC<CanvasProps> = ({
         context!.font = el.style.font || "16px Arial";
         context!.fillStyle = el.style.strokeColor || "white";
         context!.fillText(el.text!, el.x1!, el.y1!);
+      } else if (el.type === Tool.Image) {
+        const img = new Image();
+        img.src = el.src!;
+        context!.drawImage(img, el.x1!, el.y1!, el.width!, el.height!);
       }
     });
 
@@ -341,6 +392,13 @@ const Canvas: React.FC<CanvasProps> = ({
           }}
         />
       )}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/png,image/jpeg"
+        style={{ display: "none" }}
+        onChange={handleImageUpload}
+      />
     </div>
   );
 };
