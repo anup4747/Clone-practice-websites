@@ -6,3 +6,7 @@ twojs
 
 Learn about LocalStorage browser how to implement in react vite
 Add Collabration feature using websockets (Learn about websockets)
+
+
+bugs: 
+text white dragging or selecting it and dragging 

@@ -19,6 +19,8 @@ export const Home: React.FC = () => {
     if (canvas && context) {
       context.clearRect(0, 0, canvas.width, canvas.height);
     }
+    // added beacause drawtool is rerenderning the previous drawing
+    location.reload()
     // console.log(localStorage);
   };
 
