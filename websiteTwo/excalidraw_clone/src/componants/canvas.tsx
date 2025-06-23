@@ -72,6 +72,19 @@ const Canvas: React.FC<CanvasProps> = ({
     }
   }, []);
 
+  const getDiamondPoints = (x1: number, y1: number, x2: number, y2: number): [number, number][] => {
+    const centerX = (x1 + x2) / 2;
+    const centerY = (y1 + y2) / 2;
+    const width = Math.abs(x2 - x1);
+    const height = Math.abs(y2 - y1);
+    return [
+      [centerX, y1], // Top
+      [x2, centerY], // Right
+      [centerX, y2], // Bottom
+      [x1, centerY], // Left
+    ];
+  };
+
   const drawArrow = (
     roughCanvas: RoughCanvas,
     x1: number,
@@ -190,6 +203,13 @@ const Canvas: React.FC<CanvasProps> = ({
         const img = new Image();
         img.src = el.src!;
         context!.drawImage(img, el.x1!, el.y1!, el.width!, el.height!);
+      } else if (el.type === Tool.Diamond){
+        const points = getDiamondPoints(el.x1!, el.y1!, el.x2!,el.y2!);
+        roughCanvas.polygon(points,{
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth ||  2,
+          fill: el.style.fill || undefined,
+      }) 
       }
       localStorage.setItem("drawing", JSON.stringify(elements));
     });
@@ -269,6 +289,13 @@ const Canvas: React.FC<CanvasProps> = ({
         const img = new Image();
         img.src = el.src!;
         context!.drawImage(img, el.x1!, el.y1!, el.width!, el.height!);
+      } else if (el.type === Tool.Diamond){
+        const points = getDiamondPoints(el.x1!, el.y1!, el.x2!,el.y2!);
+        roughCanvas.polygon(points,{
+          stroke: el.style.strokeColor || "white",
+          strokeWidth: el.style.strokeWidth ||  2,
+          fill: el.style.fill || undefined,
+      }) 
       }
     });
 
@@ -311,6 +338,13 @@ const Canvas: React.FC<CanvasProps> = ({
         stroke: "rgba(128, 128, 128, 0.5)",
         strokeWidth: 2,
       });
+    } else if (activeTool === Tool.Diamond){
+      const points = getDiamondPoints(startPoint.x, startPoint.y, offsetX, offsetY);
+      roughCanvas.polygon(points, {
+          stroke: "rgba(128, 128, 128, 0.5)",
+          strokeWidth: 2,
+          fill: "rgba(0, 0, 0, 0.3)",
+      })
     }
   };
 
