@@ -106,6 +106,16 @@ export const ToolsMenu: React.FC = () => {
     };
   }, [locked]);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveToolContext(Tool.None);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const ToolButton: React.FC<{
     tool: Tool;
     icon: React.ReactNode;
