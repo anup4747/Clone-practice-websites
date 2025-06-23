@@ -175,7 +175,7 @@ export const ToolsMenu: React.FC = () => {
                 key={extraTool.name}
                 tool={extraTool.name}
                 icon={extraTool.icon}
-                isActive={activeTool === extraTool.name}
+                isActive={activeToolContext === extraTool.name}
                 onClick={() => selectTool(extraTool.name)}
               />
             ))}

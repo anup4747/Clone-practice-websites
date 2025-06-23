@@ -9,4 +9,5 @@ Add Collabration feature using websockets (Learn about websockets)
 
 
 bugs: 
-text white dragging or selecting it and dragging 
+text white dragging or selecting it and dragging
+when import an image and draw on it then selecting the drawing tool then shape changes  

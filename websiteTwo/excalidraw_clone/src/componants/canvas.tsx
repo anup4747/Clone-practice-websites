@@ -51,8 +51,7 @@ const Canvas: React.FC<CanvasProps> = ({
     y: number;
   } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-
+  
   // Initialize Rough.js
   useEffect(() => {
     if (!canvasRef.current) return;
