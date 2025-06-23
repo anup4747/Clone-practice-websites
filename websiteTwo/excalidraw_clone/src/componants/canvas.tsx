@@ -74,8 +74,6 @@ const Canvas: React.FC<CanvasProps> = ({
   const getDiamondPoints = (x1: number, y1: number, x2: number, y2: number): [number, number][] => {
     const centerX = (x1 + x2) / 2;
     const centerY = (y1 + y2) / 2;
-    const width = Math.abs(x2 - x1);
-    const height = Math.abs(y2 - y1);
     return [
       [centerX, y1], // Top
       [x2, centerY], // Right
@@ -226,7 +224,11 @@ const Canvas: React.FC<CanvasProps> = ({
       setTimeout(() => textInputRef.current?.focus(), 0);
     } else if (activeTool === Tool.Image){
       fileInputRef.current?.click();
-    } 
+    } else if (activeTool === Tool.Draw) {
+      setCurrentPoints([]); // Reset points for new drawing
+      setCurrentPoints([[offsetX, offsetY]]);
+      setIsDrawing(true);
+    }
     else {
       setIsDrawing(true);
     }
