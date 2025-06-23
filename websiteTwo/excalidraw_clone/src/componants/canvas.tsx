@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 import { useTool } from "../context/toolContext";
 import Tool from "../data/data";
 import { RoughCanvas } from "roughjs/bin/canvas";
-import { style } from "framer-motion/client";
 
 // Define Element interface for storing drawn shapes
 interface Element {
@@ -341,9 +340,9 @@ const Canvas: React.FC<CanvasProps> = ({
     } else if (activeTool === Tool.Diamond){
       const points = getDiamondPoints(startPoint.x, startPoint.y, offsetX, offsetY);
       roughCanvas.polygon(points, {
-          stroke: "rgba(128, 128, 128, 0.5)",
-          strokeWidth: 2,
-          fill: "rgba(0, 0, 0, 0.3)",
+        stroke: "rgba(128, 128, 128, 0.9)",
+        strokeWidth: 2,
+        fill: "rgba(0, 0, 255, 0.3)",
       })
     }
   };
